@@ -91,10 +91,25 @@
 
             <div class="earn-container">
                 <h2 class="earn-title">Tích điểm</h2>
-                <button class="btn" id="btnScanQR">Quét QR</button>
-                <button class="btn" id="btnSendImage">Gửi hình ảnh</button>
+                <p class="earn-subtitle">Nhập mã để nhận điểm:</p>
+
+                <input
+                    type="text"
+                    id="codeInput"
+                    class="earn-input"
+                    placeholder="Nhập mã (ví dụ: GP10)"
+                >
+
+                <button class="btn" id="btnSubmitCode">Xác nhận</button>
+
+                <p class="earn-note">
+                    Mã demo: GP1, GP2, GP5, GP10, GP20, GP50
+                </p>
+
+                <p id="earnMessage" class="response"></p>
             </div>
         </div>
+
 
         <!-- Màn hình 7: Quét QR -->
         <div id="qrPage" class="page hidden">

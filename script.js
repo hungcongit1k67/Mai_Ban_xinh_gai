@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const statsPage   = document.getElementById("statsPage");
     const historyPage = document.getElementById("historyPage");
     const earnPage    = document.getElementById("earnPage");
-    const qrPage      = document.getElementById("qrPage");
-    const uploadPage  = document.getElementById("uploadPage");
     const rewardPage  = document.getElementById("rewardPage");
 
     const resHome   = document.getElementById("response");
@@ -18,12 +16,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const rewardScoreEl = document.getElementById("rewardScore");
     const rewardMsgEl   = document.getElementById("rewardMessage");
 
-    const imageInput   = document.getElementById("imageInput");
-    const imagePreview = document.getElementById("imagePreview");
+    // Tích điểm bằng mã
+    const codeInput     = document.getElementById("codeInput");
+    const btnSubmitCode = document.getElementById("btnSubmitCode");
+    const earnMessage   = document.getElementById("earnMessage");
 
     let score = 0;                     // điểm hiện tại
     const HISTORY_KEY = "greenPointHistory";
     let history = [];                  // lưu lịch sử các lần cộng/trừ điểm
+
+    // Bảng mã điểm
+    const CODE_TABLE = {
+        "GP1": 1,
+        "GP2": 2,
+        "GP5": 5,
+        "GP10": 10,
+        "GP20": 20,
+        "GP50": 50,
+    };
 
     // ===== LOCALSTORAGE: load & save =====
     function loadHistory() {
@@ -76,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
         statsPage.classList.add("hidden");
         historyPage.classList.add("hidden");
         earnPage.classList.add("hidden");
-        qrPage.classList.add("hidden");
-        uploadPage.classList.add("hidden");
         rewardPage.classList.add("hidden");
     }
 
@@ -115,16 +123,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function showEarn() {
         hideAll();
         earnPage.classList.remove("hidden");
-    }
-
-    function showQR() {
-        hideAll();
-        qrPage.classList.remove("hidden");
-    }
-
-    function showUpload() {
-        hideAll();
-        uploadPage.classList.remove("hidden");
+        earnMessage.textContent = "";
+        if (codeInput) codeInput.value = "";
     }
 
     function showReward() {
@@ -179,26 +179,39 @@ document.addEventListener("DOMContentLoaded", function () {
         renderHistory();
     });
 
-    // ===== MÀN 6: TÍCH ĐIỂM =====
+    // ===== MÀN 6: TÍCH ĐIỂM (NHẬP MÃ) =====
     document.getElementById("closeEarn").addEventListener("click", showHome);
-    document.getElementById("btnScanQR").addEventListener("click", showQR);
-    document.getElementById("btnSendImage").addEventListener("click", showUpload);
 
-    // ===== MÀN 7: QUÉT QR =====
-    document.getElementById("closeQR").addEventListener("click", showEarn);
+    if (btnSubmitCode && codeInput && earnMessage) {
+        btnSubmitCode.addEventListener("click", function () {
+            const raw = codeInput.value.trim().toUpperCase();
+            if (!raw) {
+                earnMessage.textContent = "Vui lòng nhập mã.";
+                return;
+            }
 
-    // ===== MÀN 8: GỬI HÌNH ẢNH =====
-    document.getElementById("closeUpload").addEventListener("click", showEarn);
+            const delta = CODE_TABLE[raw];
+            if (delta === undefined) {
+                earnMessage.textContent = "Mã không hợp lệ. Hãy kiểm tra lại.";
+                return;
+            }
 
-    if (imageInput && imagePreview) {
-        imageInput.addEventListener("change", function () {
-            imagePreview.innerHTML = "";
-            const files = Array.from(this.files || []);
-            files.forEach(file => {
-                const img = document.createElement("img");
-                img.src = URL.createObjectURL(file);
-                imagePreview.appendChild(img);
-            });
+            score += delta;
+            updateScoreDisplay();
+
+            const msg = `Bạn nhập mã ${raw}, được cộng ${delta} điểm.`;
+            earnMessage.textContent = msg;
+
+            history.push(msg);
+            saveHistory();
+            codeInput.value = "";
+        });
+
+        // Enter để gửi
+        codeInput.addEventListener("keyup", function (e) {
+            if (e.key === "Enter") {
+                btnSubmitCode.click();
+            }
         });
     }
 
@@ -210,9 +223,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const cost = parseInt(this.dataset.cost, 10);
             const name = this.dataset.name;
             if (score >= cost) {
-                score -= cost;               // ✅ trừ điểm
+                score -= cost;               // trừ điểm
                 updateScoreDisplay();
-                history.push(`Bạn đã đổi "${name}" (-${cost} điểm).`);
+                const msg = `Bạn đã đổi "${name}" (-${cost} điểm).`;
+                history.push(msg);
                 saveHistory();
                 rewardMsgEl.textContent = `Bạn đã đổi "${name}". Điểm còn lại: ${score}.`;
             } else {
