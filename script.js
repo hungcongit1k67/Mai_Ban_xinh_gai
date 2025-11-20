@@ -21,8 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnSubmitCode = document.getElementById("btnSubmitCode");
     const earnMessage   = document.getElementById("earnMessage");
 
+    // ===== BIẾN TOÀN CỤC =====
     let score = 0;                     // điểm hiện tại
     const HISTORY_KEY = "greenPointHistory";
+    const SCORE_KEY   = "greenPointScore";
     let history = [];                  // lưu lịch sử các lần cộng/trừ điểm
 
     // Bảng mã điểm
@@ -54,7 +56,23 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     }
 
+    function loadScore() {
+        const raw = localStorage.getItem(SCORE_KEY);
+        const val = parseInt(raw, 10);
+        if (!isNaN(val)) {
+            score = val;
+        } else {
+            score = 0;
+        }
+    }
+
+    function saveScore() {
+        localStorage.setItem(SCORE_KEY, String(score));
+    }
+
+    // Gọi khi mở trang
     loadHistory();
+    loadScore();
 
     // ===== HÀM HỖ TRỢ =====
     function updateScoreDisplay() {
@@ -136,7 +154,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ===== MÀN 1: TRANG CHÍNH =====
     document.getElementById("btnStart").addEventListener("click", function () {
-        score = 0;  // lượt mới → reset điểm, không xóa lịch sử
+        // Bắt đầu lượt mới → reset điểm về 0 và lưu lại
+        score = 0;
+        saveScore();
         showReady();
     });
 
@@ -150,6 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btnReady").addEventListener("click", function () {
         const delta = 1;
         score += delta;
+        saveScore();
         history.push(`Bạn có thêm ${delta} điểm.`);
         saveHistory();
         showScore();
@@ -158,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btnExcited").addEventListener("click", function () {
         const delta = 2;
         score += delta;
+        saveScore();
         history.push(`Bạn có thêm ${delta} điểm.`);
         saveHistory();
         showScore();
@@ -197,6 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             score += delta;
+            saveScore();
             updateScoreDisplay();
 
             const msg = `Bạn nhập mã ${raw}, được cộng ${delta} điểm.`;
@@ -224,7 +247,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const name = this.dataset.name;
             if (score >= cost) {
                 score -= cost;               // trừ điểm
+                saveScore();
                 updateScoreDisplay();
+
                 const msg = `Bạn đã đổi "${name}" (-${cost} điểm).`;
                 history.push(msg);
                 saveHistory();
@@ -234,4 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    // khi load xong, nếu bạn mở thẳng sang thống kê / đổi thưởng
+    // thì updateScoreDisplay sẽ dùng score lấy từ localStorage
+    updateScoreDisplay();
 });
