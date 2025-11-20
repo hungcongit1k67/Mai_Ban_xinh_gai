@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Point</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="phone-frame">
+    <div class="screen">
+
+        <!-- Màn hình 1: Trang chính -->
+        <div id="homePage" class="page">
+            <h1 class="title">GREEN<br>POINT</h1>
+
+            <div class="logo">🌱</div>
+
+            <button class="btn" id="btnStart">Bắt đầu</button>
+            <button class="btn" id="btnScore">Tích điểm</button>
+            <button class="btn" id="btnStat">Thống kê</button>
+
+            <p id="response" class="response"></p>
+        </div>
+
+        <!-- Màn hình 2: Bạn đã sẵn sàng chưa -->
+        <div id="readyPage" class="page hidden">
+            <button class="back-btn" id="backFromReady">✕</button>
+
+            <p class="big-text">
+                Bạn đã<br>
+                sẵn sàng<br>
+                chưa?
+            </p>
+
+            <button class="btn" id="btnReady">Tôi đã sẵn sàng</button>
+            <button class="btn" id="btnExcited">Tôi rất hào hứng</button>
+
+            <p id="readyResponse" class="response"></p>
+        </div>
+
+        <!-- Màn hình 3: Điểm hiện tại -->
+        <div id="scorePage" class="page hidden">
+            <button class="back-btn" id="closeScore">✕</button>
+
+            <div class="score-header">
+                <span class="score-title">Điểm hiện tại:</span>
+                <span class="score-value" id="scoreValue">0</span>
+            </div>
+
+            <div class="note">
+                <p>- Chú ý:</p>
+                <p>Sau mỗi lần đổi thưởng, bạn hãy ấn <b>Bắt đầu</b> để chinh phục phần thưởng mới nhé.</p>
+            </div>
+        </div>
+
+        <!-- Màn hình 4: Thống kê -->
+        <div id="statsPage" class="page hidden">
+            <button class="back-btn" id="closeStats">✕</button>
+
+            <div class="stats-bubble">
+                <div>Số điểm hiện có:</div>
+                <div class="stats-score" id="statsScore">0</div>
+            </div>
+
+            <button class="btn" id="btnHistory">Lịch sử</button>
+            <button class="btn" id="btnRedeem">Đổi thưởng</button>
+
+            <p id="statsMessage" class="response"></p>
+        </div>
+
+        <!-- Màn hình 5: Lịch sử tích điểm -->
+        <div id="historyPage" class="page hidden">
+            <button class="back-btn" id="closeHistory">✕</button>
+
+            <div class="history-container">
+                <h2 class="history-title">Lịch sử tích điểm</h2>
+
+                <ul id="historyList" class="history-list">
+                    <!-- JS sẽ đổ nội dung -->
+                </ul>
+
+                <button class="btn btn-clear" id="clearHistoryBtn">Xóa lịch sử</button>
+            </div>
+        </div>
+
+        <!-- Màn hình 6: Tích điểm -->
+        <div id="earnPage" class="page hidden">
+            <button class="back-btn" id="closeEarn">✕</button>
+
+            <div class="earn-container">
+                <h2 class="earn-title">Tích điểm</h2>
+                <button class="btn" id="btnScanQR">Quét QR</button>
+                <button class="btn" id="btnSendImage">Gửi hình ảnh</button>
+            </div>
+        </div>
+
+        <!-- Màn hình 7: Quét QR -->
+        <div id="qrPage" class="page hidden">
+            <button class="back-btn" id="closeQR">✕</button>
+
+            <div class="qr-container">
+                <h2 class="earn-title">Quét QR</h2>
+                <div class="qr-box"></div>
+                <p class="qr-hint">Khu vực quét QR (demo giao diện).</p>
+            </div>
+        </div>
+
+        <!-- Màn hình 8: Gửi hình ảnh -->
+        <div id="uploadPage" class="page hidden">
+            <button class="back-btn" id="closeUpload">✕</button>
+
+            <div class="upload-container">
+                <h2 class="earn-title">Gửi hình ảnh</h2>
+
+                <label class="upload-label" for="imageInput">Chọn ảnh từ máy</label>
+                <input type="file" id="imageInput" accept="image/*" multiple class="upload-input">
+
+                <p class="upload-hint">Sau khi chọn, ảnh sẽ hiện bên dưới.</p>
+
+                <div id="imagePreview" class="upload-grid">
+                    <!-- thumbnails ảnh -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Màn hình 9: Đổi thưởng -->
+        <div id="rewardPage" class="page hidden">
+            <button class="back-btn" id="closeReward">✕</button>
+
+            <div class="reward-container">
+                <h2 class="reward-title">Đổi thưởng</h2>
+                <p class="reward-points">
+                    Điểm hiện có: <span id="rewardScore">0</span>
+                </p>
+
+                <button class="btn reward-item" data-cost="50" data-name="Sen đá">
+                    Sen đá (50 điểm)
+                </button>
+
+                <button class="btn reward-item" data-cost="80" data-name="Sản phẩm handmade bằng nhựa">
+                    Sản phẩm handmade bằng nhựa (80 điểm)
+                </button>
+                <p id="rewardMessage" class="response"></p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>

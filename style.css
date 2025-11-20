@@ -1,0 +1,279 @@
+body {
+    margin: 0;
+    background: #f0f0f0;
+    font-family: "Arial", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Khung điện thoại */
+.phone-frame {
+    width: 360px;
+    height: 720px;
+    background: pink;
+    border: 12px solid #333;
+    border-radius: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* để nút X cố định theo khung */
+}
+
+.screen {
+    text-align: center;
+    width: 80%;
+    /* position: relative; */
+}
+
+/* Một "page" = một màn hình trong app */
+.page {
+    width: 100%;
+}
+
+/* Ẩn / hiện màn hình */
+.hidden {
+    display: none;
+}
+
+.title {
+    font-size: 34px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 60px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 20px;
+    border-radius: 20px;
+    border: 2px solid #555;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:active {
+    background: #d5ffd5;
+}
+
+.response {
+    margin-top: 25px;
+    font-size: 18px;
+    color: #2a7c2a;
+    min-height: 30px;
+}
+
+/* Chữ to ở màn "Bạn đã sẵn sàng chưa" */
+.big-text {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin: 80px 0 40px;
+}
+
+/* Nút X quay lại – luôn nằm góc trên trái khung điện thoại */
+.back-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Header điểm hiện tại */
+.score-header {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    border: 2px solid #555;
+    border-radius: 20px;
+    padding: 12px 18px;
+    font-size: 22px;
+    display: inline-block;
+}
+
+.score-title {
+    margin-right: 8px;
+}
+
+.score-value {
+    font-weight: bold;
+}
+
+/* Khối chú ý */
+.note {
+    text-align: left;
+    margin: 0 10px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Bong bóng thống kê ở màn Thống kê */
+.stats-bubble {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    padding: 16px 20px;
+    border-radius: 30px;
+    border: 2px solid #555;
+    display: inline-block;
+    font-size: 18px;
+    background: #f9f9f9;
+}
+
+.stats-score {
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+/* Lịch sử */
+.history-container {
+    /* chiếm toàn chiều cao phần màn hình */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;   /* chừa chỗ cho tiêu đề & nút X */
+    padding-bottom: 30px;
+}
+
+.history-title {
+    margin: 0 0 16px 0;
+    font-size: 22px;
+    text-align: center;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0 5px;
+    margin: 0;
+    text-align: left;
+
+    /* phần cuộn ở giữa */
+    flex: 1;
+    overflow-y: auto;
+    font-size: 16px;
+}
+
+.history-list li {
+    padding: 8px 4px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Nút xóa lịch sử (nằm cố định dưới cùng trong history-container) */
+.btn-clear {
+    background: #ffecec;
+    border-color: #dd7777;
+    margin-top: 16px;   /* cách list một đoạn */
+}
+
+.btn-clear:active {
+    background: #ffd1d1;
+}
+
+/* Tích điểm */
+.earn-container {
+    margin-top: 80px;
+}
+
+.earn-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Quét QR */
+.qr-container {
+    margin-top: 70px;
+}
+
+.qr-box {
+    width: 180px;
+    height: 180px;
+    border-radius: 16px;
+    border: 2px dashed #555;
+    margin: 20px auto;
+}
+
+.qr-hint {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Gửi hình ảnh */
+.upload-container {
+    margin-top: 60px;
+}
+
+.upload-label {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 18px;
+    border-radius: 20px;
+    border: 2px solid #555;
+    background: #fff;
+    cursor: pointer;
+}
+
+.upload-input {
+    display: none;
+}
+
+.upload-hint {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.upload-grid {
+    margin-top: 20px;
+    padding: 0 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.upload-grid img {
+    width: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* Đổi thưởng */
+.reward-container {
+    margin-top: 70px;
+}
+
+.reward-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.reward-points {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.reward-item {
+    text-align: center;
+}
+
+/* Phóng to khung khi xem trên màn hình lớn */
+@media (min-width: 800px) {
+    .phone-frame {
+        transform: scale(1.3);
+    }
+}
